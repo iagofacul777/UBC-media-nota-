@@ -62,7 +62,7 @@ int main() {
         
         //input do usuario chamando a função
         A1=PegarNota("Digite a nota da A1: ");
-        A2=PegarNota("DIgite a nota da A2: ");
+        A2=PegarNota("Digite a nota da A2: ");
         
         //validando se precisou fazer AF e substituindo se sim
         if (A1+A2<12){
@@ -104,7 +104,7 @@ int main() {
             
         }
             // Verificação do loop
-        printf("\nDeseja continuar o processo? (sim/nao): ");
+        printf("\nDeseja continuar o processo? (sim/não): ");
         scanf("%s", repetir);
         while(getchar() != '\n');
             
