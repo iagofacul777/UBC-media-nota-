@@ -17,7 +17,7 @@ float PegarNota(char* mensagem) {
         
         
         if (resultado != 1 || nota <0 ||nota >10){
-            printf("Nota inválida! Digite um numero de 0 a 10.\n");
+            printf("Nota inválida! Digite um numero de 0 à 10.\n");
             
         }
     }while (resultado!= 1 || nota < 0|| nota>10);
@@ -61,12 +61,12 @@ int main() {
         
         
         //input do usuario chamando a função
-        A1=PegarNota("Digite a nota de A1: ");
-        A2=PegarNota("DIgite a nota do A2: ");
+        A1=PegarNota("Digite a nota da A1: ");
+        A2=PegarNota("DIgite a nota da A2: ");
         
         //validando se precisou fazer AF e substituindo se sim
         if (A1+A2<12){
-            AF= PegarNota("DIgitea nota da Avaliação Final(AF): ");
+            AF= PegarNota("Digitea nota da Avaliação Final(AF): ");
             if (A1 < A2){
                 A1=AF;
             } else {
