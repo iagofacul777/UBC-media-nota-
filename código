@@ -44,7 +44,7 @@ int main() {
     char repetir[4];
     
     do {
-        printf("--- Processando Aluno %d ---\n", alunoAtual + 1);
+        printf("\n--- Processando Aluno %d ---\n", alunoAtual + 1);
         
         // Validação do nome
         do {
