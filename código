@@ -2,105 +2,108 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAX_ALUNOS 100
+#define MAX_ALUNOS 100  // Definindo o número máximo de alunos
 
 typedef struct {
-    char nome[50];
-    float A1;
-    float A2;
-    float AF;
-    float media;
-    char situacao[10];
+    char nome[50];  // Nome do aluno (máximo de 50 caracteres)
+    float A1;       // Nota da primeira avaliação
+    float A2;       // Nota da segunda avaliação
+    float AF;       // Nota da Avaliação Final
+    float media;    // Média das avaliações
+    char situacao[10];  // Situação do aluno (Aprovado ou Reprovado)
 } Aluno;
 
+// Função para pegar a nota do aluno com validação
 float PegarNota(char* mensagem) {
     float nota;
     int resultado;
     do {
-        printf("%s", mensagem);
-        resultado = scanf("%f", &nota);
-        while (getchar() != '\n');  // Limpar o buffer
+        printf("%s", mensagem);  // Exibe a mensagem para o usuário
+        resultado = scanf("%f", &nota);  // Lê a nota
+        while (getchar() != '\n');  // Limpa o buffer de entrada para evitar problemas com o próximo scanf
         
+        // Validação da nota
         if (resultado != 1 || nota < 0 || nota > 10) {
             printf("Nota inválida! Digite um número de 0 à 10.\n");
         }
-    } while (resultado != 1 || nota < 0 || nota > 10);
+    } while (resultado != 1 || nota < 0 || nota > 10);  // Repete se a nota for inválida
     
     return nota;
 }
 
+// Função para validar o nome do aluno, permitindo apenas letras e espaços
 int NomeValido(char* nome) {
     for (int i = 0; nome[i] != '\0'; i++) {
-        if (!isalpha(nome[i]) && nome[i] != ' ') {
-            return 0;
+        if (!isalpha(nome[i]) && nome[i] != ' ') {  // Verifica se o caractere não é letra nem espaço
+            return 0;  // Retorna 0 (inválido) caso encontre algo diferente
         }
     }
-    return 1;
+    return 1;  // Retorna 1 (válido) se o nome for composto apenas por letras e espaços
 }
 
 int main() {
-    Aluno alunos[MAX_ALUNOS];
-    int alunoAtual = 0;
-    char repetir[4];
+    Aluno alunos[MAX_ALUNOS];  // Vetor para armazenar os alunos
+    int alunoAtual = 0;  // Índice do aluno atual
+    char repetir[4];  // Variável para perguntar se deseja continuar o cadastro
     
     do {
-        printf("\n--- Processando Aluno %d ---\n", alunoAtual + 1);
+        printf("\n--- Processando Aluno %d ---\n", alunoAtual + 1);  // Exibe o número do aluno sendo processado
         
         // Validação do nome
         do {
-            printf("Digite o nome do aluno: ");
-            fgets(alunos[alunoAtual].nome, sizeof(alunos[alunoAtual].nome), stdin);
-            alunos[alunoAtual].nome[strcspn(alunos[alunoAtual].nome, "\n")] = '\0';  // Remover o '\n' no final
-            if (!NomeValido(alunos[alunoAtual].nome)) {
-                printf("Nome inválido! Digite apenas letras.\n");
+            printf("Digite o nome do aluno: ");  // Solicita o nome do aluno
+            fgets(alunos[alunoAtual].nome, sizeof(alunos[alunoAtual].nome), stdin);  // Lê o nome do aluno
+            alunos[alunoAtual].nome[strcspn(alunos[alunoAtual].nome, "\n")] = '\0';  // Remove o '\n' do final
+            if (!NomeValido(alunos[alunoAtual].nome)) {  // Verifica se o nome é válido
+                printf("Nome inválido! Digite apenas letras.\n");  // Exibe mensagem de erro
             }
-        } while (!NomeValido(alunos[alunoAtual].nome));
+        } while (!NomeValido(alunos[alunoAtual].nome));  // Repete caso o nome seja inválido
         
-        // Entrando com as notas
-        alunos[alunoAtual].A1 = PegarNota("Digite a nota da A1: ");
-        alunos[alunoAtual].A2 = PegarNota("Digite a nota da A2: ");
+        // Entrada das notas
+        alunos[alunoAtual].A1 = PegarNota("Digite a nota da A1: ");  // Pega a nota da A1
+        alunos[alunoAtual].A2 = PegarNota("Digite a nota da A2: ");  // Pega a nota da A2
         
-        // Verificando se precisa de Avaliação Final
-        if (alunos[alunoAtual].A1 + alunos[alunoAtual].A2 < 12) {
-            alunos[alunoAtual].AF = PegarNota("Digite a nota da Avaliação Final (AF): ");
-            if (alunos[alunoAtual].A1 < alunos[alunoAtual].A2) {
-                alunos[alunoAtual].A1 = alunos[alunoAtual].AF;
+        // Verifica se o aluno precisa de Avaliação Final (AF)
+        if (alunos[alunoAtual].A1 + alunos[alunoAtual].A2 < 12) {  // Se a soma das notas A1 e A2 for menor que 12
+            alunos[alunoAtual].AF = PegarNota("Digite a nota da Avaliação Final (AF): ");  // Pega a nota da AF
+            if (alunos[alunoAtual].A1 < alunos[alunoAtual].A2) {  // Se A1 for menor que A2
+                alunos[alunoAtual].A1 = alunos[alunoAtual].AF;  // Substitui A1 pela AF
             } else {
-                alunos[alunoAtual].A2 = alunos[alunoAtual].AF;
+                alunos[alunoAtual].A2 = alunos[alunoAtual].AF;  // Caso contrário, substitui A2 pela AF
             }
         }
         
-        // Calculando a média
+        // Calcula a média do aluno
         alunos[alunoAtual].media = (alunos[alunoAtual].A1 + alunos[alunoAtual].A2) / 2;
         
-        // Definindo a situação
-        if (alunos[alunoAtual].media >= 6) {
+        // Define a situação do aluno com base na média
+        if (alunos[alunoAtual].media >= 6) {  // Se a média for maior ou igual a 6, o aluno está aprovado
             strcpy(alunos[alunoAtual].situacao, "Aprovado");
-        } else {
+        } else {  // Caso contrário, o aluno está reprovado
             strcpy(alunos[alunoAtual].situacao, "Reprovado");
         }
         
-        // Pergunta se deseja continuar
+        // Pergunta se deseja continuar o cadastro de outro aluno
         printf("Deseja continuar o cadastro de outro aluno? (sim/não): ");
-        scanf("%s", repetir);
-        while (getchar() != '\n');  // Limpar o buffer
+        scanf("%s", repetir);  // Lê a resposta
+        while (getchar() != '\n');  // Limpa o buffer de entrada
         
-        alunoAtual++;
+        alunoAtual++;  // Avança para o próximo aluno
         
-    } while (strcmp(repetir, "sim") == 0 && alunoAtual < MAX_ALUNOS);
+    } while (strcmp(repetir, "sim") == 0 && alunoAtual < MAX_ALUNOS);  // Repete se a resposta for "sim" e se ainda houver espaço
     
-    // Relatório final
+    // Relatório final dos alunos cadastrados
     printf("\n--- Relatório Final ---\n");
-    for (int i = 0; i < alunoAtual; i++) {
-        printf("\n----- Relatório do Aluno %d -----\n", i + 1);
-        printf("Nome: %s\n", alunos[i].nome);
-        printf("Nota A1: %.2f\n", alunos[i].A1);
-        printf("Nota A2: %.2f\n", alunos[i].A2);
-        printf("Média: %.2f\n", alunos[i].media);
-        printf("Situação: %s\n", alunos[i].situacao);
+    for (int i = 0; i < alunoAtual; i++) {  // Para cada aluno cadastrado
+        printf("\n----- Relatório do Aluno %d -----\n", i + 1);  // Exibe o número do aluno
+        printf("Nome: %s\n", alunos[i].nome);  // Exibe o nome do aluno
+        printf("Nota A1: %.2f\n", alunos[i].A1);  // Exibe a nota A1
+        printf("Nota A2: %.2f\n", alunos[i].A2);  // Exibe a nota A2
+        printf("Média: %.2f\n", alunos[i].media);  // Exibe a média do aluno
+        printf("Situação: %s\n", alunos[i].situacao);  // Exibe a situação (Aprovado/Reprovado)
         printf("-----------------------------\n");
     }
     
-    printf("\nPrograma encerrado.\n");
-    return 0;
+    printf("\nPrograma encerrado.\n");  // Exibe mensagem final
+    return 0;  // Finaliza o programa
 }
