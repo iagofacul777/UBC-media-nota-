@@ -1,26 +1,30 @@
-# Sistema de Cálculo de Média com Avaliação Final (AF)
+# Sistema de Cadastro e Gestão de Alunos
 
-Este programa em linguagem C simula o processo de cálculo de média de um aluno com base em duas avaliações principais (A1 e A2). Caso a soma dessas notas seja inferior a 12, o aluno terá direito a uma Avaliação Final (AF), que substituirá a menor das duas notas. Ao final, o sistema informa se o aluno foi aprovado ou reprovado com base em uma média mínima de 6,0.
+## 📋 Descrição
 
-## Funcionalidades
+Este é um sistema simples de cadastro e gestão de alunos desenvolvido em linguagem C. O sistema permite cadastrar, autenticar, atualizar, listar e deletar alunos, além de realizar o cálculo da média final com base nas notas das avaliações A1, A2 e, se necessário, AF (Avaliação Final).
 
-- Entrada e validação do nome do aluno (apenas letras).
-- Entrada e validação de notas entre 0 e 10.
-- Cálculo da média e substituição de nota com base na AF.
-- Mensagem de aprovação ou reprovação com `switch/case`.
-- Loop de repetição para processar múltiplos alunos.
+O sistema também gera relatórios com a situação do aluno: **Aprovado** ou **Reprovado**.
 
-## Tecnologias
+## 🎯 Funcionalidades
 
-- Linguagem: C
-- Bibliotecas utilizadas:
-  - `stdio.h`
-  - `string.h`
-  - `ctype.h`
+- ✅ Cadastro de alunos com validação de nome, RGM e senha.
+- ✅ Login de aluno com autenticação por RGM e senha.
+- ✅ Cálculo automático da média final e situação (Aprovado/Reprovado).
+- ✅ Atualização de dados do aluno.
+- ✅ Deleção de alunos cadastrados.
+- ✅ Listagem de todos os alunos cadastrados.
+- ✅ Relatório completo dos alunos com médias e situações.
 
-## Como compilar
+## 🛠️ Tecnologias Utilizadas
 
-Use um compilador C como `gcc`. No terminal, digite:
+- Linguagem C
+- Biblioteca padrão: stdio.h, string.h, ctype.h, locale.h
 
-```bash
-gcc -o media_aluno programa.c
+## 🚀 Como Executar
+
+1. Clone ou baixe o repositório.
+2. Compile o código com um compilador C (por exemplo, GCC):
+
+   ```bash
+   gcc sistema_alunos.c -o sistema_alunos
