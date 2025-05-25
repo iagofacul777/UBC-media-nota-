@@ -139,7 +139,7 @@ void LoginAluno() {
     do {
         printf("Digite a nota da A1 (0 a 10): ");
         validInput = scanf("%f", &A1);
-        while(getchar() != '\n');
+        while (getchar() != '\n');
         if (!validInput || A1 < 0 || A1 > 10) {
             printf("Nota inválida. Digite um valor entre 0 e 10.\n");
         } else {
@@ -150,7 +150,7 @@ void LoginAluno() {
     do {
         printf("Digite a nota da A2 (0 a 10): ");
         validInput = scanf("%f", &A2);
-        while(getchar() != '\n');
+        while (getchar() != '\n');
         if (!validInput || A2 < 0 || A2 > 10) {
             printf("Nota inválida. Digite um valor entre 0 e 10.\n");
         } else {
@@ -163,7 +163,7 @@ void LoginAluno() {
         do {
             printf("Digite a nota da AF (0 a 10): ");
             validInput = scanf("%f", &AF);
-            while(getchar() != '\n');
+            while (getchar() != '\n');
             if (!validInput || AF < 0 || AF > 10) {
                 printf("Nota inválida. Digite um valor entre 0 e 10.\n");
             } else {
@@ -293,11 +293,13 @@ void DeletarAluno() {
             return;
         }
     }
+
     printf("Aluno com RGM %s não encontrado.\n", rgmBusca);
 }
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
+
     int opcao;
 
     do {
@@ -305,38 +307,23 @@ int main() {
         printf("1. Cadastrar Aluno\n");
         printf("2. Login do Aluno\n");
         printf("3. Relatório de Alunos\n");
-        printf("4. Listar Alunos\n");
+        printf("4. Lista de Alunos (Admin)\n");
         printf("5. Atualizar Aluno\n");
         printf("6. Deletar Aluno\n");
         printf("0. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
-        while(getchar() != '\n');
+        while (getchar() != '\n');
 
         switch (opcao) {
-            case 1:
-                CadastrarAluno();
-                break;
-            case 2:
-                LoginAluno();
-                break;
-            case 3:
-                RelatorioAlunos();
-                break;
-            case 4:
-                ListaAlunos();
-                break;
-            case 5:
-                AtualizarAluno();
-                break;
-            case 6:
-                DeletarAluno();
-                break;
-            case 0:
-                printf("Saindo do sistema.\n");
-                break;
-            default:
-                printf("Opção inválida. Tente novamente.\n");
+            case 1: CadastrarAluno(); break;
+            case 2: LoginAluno(); break;
+            case 3: RelatorioAlunos(); break;
+            case 4: ListaAlunos(); break;
+            case 5: AtualizarAluno(); break;
+            case 6: DeletarAluno(); break;
+            case 0: printf("Saindo...\n"); break;
+            default: printf("Opção inválida. Tente novamente.\n");
         }
     } while (opcao != 0);
 
