@@ -3,8 +3,9 @@
 #include <locale.h>
 #include <ctype.h>
 
-#define MAX_ALUNOS 100
+#define MAX_ALUNOS 100  // Define o máximo de alunos que o sistema suporta
 
+// Estrutura para armazenar dados do aluno
 typedef struct {
     char nome[50];
     char RGM[20];
@@ -13,40 +14,42 @@ typedef struct {
     char situacao[15];  // "Aprovado" ou "Reprovado"
 } Aluno;
 
-Aluno alunos[MAX_ALUNOS];
-int qtdAlunos = 0;
+Aluno alunos[MAX_ALUNOS];  // Vetor que armazena todos os alunos
+int qtdAlunos = 0;         // Quantidade atual de alunos cadastrados
 
-// Funções auxiliares
-
+// Verifica se o RGM já existe no cadastro para evitar duplicatas
 int rgmExiste(const char *rgm) {
     for (int i = 0; i < qtdAlunos; i++) {
         if (strcmp(alunos[i].RGM, rgm) == 0) {
-            return 1;
+            return 1;  // RGM encontrado
         }
     }
-    return 0;
+    return 0;  // RGM não encontrado
 }
 
+// Valida se o nome contém apenas letras e espaços
 int validaNome(const char *nome) {
     if (strlen(nome) == 0) return 0;
     for (int i = 0; nome[i] != '\0'; i++) {
         if (!isalpha(nome[i]) && nome[i] != ' ') {
-            return 0;
+            return 0;  // Caracter inválido encontrado
         }
     }
-    return 1;
+    return 1;  // Nome válido
 }
 
+// Valida se a string contém apenas números
 int validaNumeros(const char *str) {
     if (strlen(str) == 0) return 0;
     for (int i = 0; str[i] != '\0'; i++) {
         if (!isdigit(str[i])) {
-            return 0;
+            return 0;  // Caracter não numérico encontrado
         }
     }
-    return 1;
+    return 1;  // String contém apenas números
 }
 
+// Função para cadastrar um novo aluno
 void CadastrarAluno() {
     if (qtdAlunos >= MAX_ALUNOS) {
         printf("Limite de alunos cadastrados atingido.\n");
@@ -56,10 +59,11 @@ void CadastrarAluno() {
     Aluno novoAluno;
     printf("\n--- Cadastrar Aluno ---\n");
 
+    // Entrada e validação do nome
     do {
         printf("Digite o nome do aluno: ");
         fgets(novoAluno.nome, sizeof(novoAluno.nome), stdin);
-        novoAluno.nome[strcspn(novoAluno.nome, "\n")] = '\0';
+        novoAluno.nome[strcspn(novoAluno.nome, "\n")] = '\0';  // Remove \n
         if (!validaNome(novoAluno.nome)) {
             printf("Nome inválido! Use apenas letras e espaços.\n");
         } else {
@@ -67,10 +71,11 @@ void CadastrarAluno() {
         }
     } while (1);
 
+    // Entrada e validação do RGM
     do {
         printf("Digite o RGM do aluno: ");
         fgets(novoAluno.RGM, sizeof(novoAluno.RGM), stdin);
-        novoAluno.RGM[strcspn(novoAluno.RGM, "\n")] = '\0';
+        novoAluno.RGM[strcspn(novoAluno.RGM, "\n")] = '\0';  // Remove \n
         if (!validaNumeros(novoAluno.RGM)) {
             printf("RGM inválido! Use apenas números.\n");
         } else if (rgmExiste(novoAluno.RGM)) {
@@ -80,10 +85,11 @@ void CadastrarAluno() {
         }
     } while (1);
 
+    // Entrada e validação da senha (somente números)
     do {
         printf("Digite a senha do aluno: ");
         fgets(novoAluno.senha, sizeof(novoAluno.senha), stdin);
-        novoAluno.senha[strcspn(novoAluno.senha, "\n")] = '\0';
+        novoAluno.senha[strcspn(novoAluno.senha, "\n")] = '\0';  // Remove \n
         if (!validaNumeros(novoAluno.senha)) {
             printf("Senha inválida! Use apenas números.\n");
         } else {
@@ -91,15 +97,17 @@ void CadastrarAluno() {
         }
     } while (1);
 
+    // Inicializa média e situação
     novoAluno.mediaFinal = 0.0;
     strcpy(novoAluno.situacao, "N/A");
 
-    alunos[qtdAlunos] = novoAluno;
-    qtdAlunos++;
+    alunos[qtdAlunos] = novoAluno;  // Adiciona o novo aluno no vetor
+    qtdAlunos++;                    // Incrementa quantidade de alunos
 
     printf("Aluno cadastrado com sucesso!\n");
 }
 
+// Função para login do aluno e lançamento das notas
 void LoginAluno() {
     if (qtdAlunos == 0) {
         printf("\nNenhum aluno cadastrado para login.\n");
@@ -119,6 +127,7 @@ void LoginAluno() {
     fgets(senhaLogin, sizeof(senhaLogin), stdin);
     senhaLogin[strcspn(senhaLogin, "\n")] = '\0';
 
+    // Busca pelo aluno com RGM e senha informados
     for (int i = 0; i < qtdAlunos; i++) {
         if (strcmp(alunos[i].RGM, rgmLogin) == 0 && strcmp(alunos[i].senha, senhaLogin) == 0) {
             indiceAluno = i;
@@ -136,10 +145,11 @@ void LoginAluno() {
     float A1, A2, AF;
     int validInput;
 
+    // Entrada da nota A1
     do {
         printf("Digite a nota da A1 (0 a 10): ");
         validInput = scanf("%f", &A1);
-        while (getchar() != '\n');
+        while (getchar() != '\n');  // Limpa buffer
         if (!validInput || A1 < 0 || A1 > 10) {
             printf("Nota inválida. Digite um valor entre 0 e 10.\n");
         } else {
@@ -147,10 +157,11 @@ void LoginAluno() {
         }
     } while (1);
 
+    // Entrada da nota A2
     do {
         printf("Digite a nota da A2 (0 a 10): ");
         validInput = scanf("%f", &A2);
-        while (getchar() != '\n');
+        while (getchar() != '\n');  // Limpa buffer
         if (!validInput || A2 < 0 || A2 > 10) {
             printf("Nota inválida. Digite um valor entre 0 e 10.\n");
         } else {
@@ -158,6 +169,7 @@ void LoginAluno() {
         }
     } while (1);
 
+    // Verifica se é necessária Avaliação Final (AF)
     if ((A1 + A2) / 2 < 6) {
         printf("Aluno precisa fazer Avaliação Final (AF).\n");
         do {
@@ -171,6 +183,7 @@ void LoginAluno() {
             }
         } while (1);
 
+        // Substitui a menor nota pela nota da AF
         if (A1 < A2) {
             A1 = AF;
         } else {
@@ -178,6 +191,7 @@ void LoginAluno() {
         }
     }
 
+    // Calcula a média final e atualiza os dados do aluno
     float mediaFinal = (A1 + A2) / 2;
     alunos[indiceAluno].mediaFinal = mediaFinal;
 
@@ -187,6 +201,7 @@ void LoginAluno() {
         strcpy(alunos[indiceAluno].situacao, "Reprovado");
     }
 
+    // Exibe relatório do aluno
     printf("\n--- Relatório do Aluno ---\n");
     printf("Aluno: %s\n", alunos[indiceAluno].nome);
     printf("RGM: %s\n", alunos[indiceAluno].RGM);
@@ -196,6 +211,7 @@ void LoginAluno() {
     printf("Situação: %s\n", alunos[indiceAluno].situacao);
 }
 
+// Exibe relatório completo de todos os alunos cadastrados
 void RelatorioAlunos() {
     if (qtdAlunos == 0) {
         printf("\nNenhum aluno cadastrado.\n");
@@ -212,6 +228,7 @@ void RelatorioAlunos() {
     }
 }
 
+// Exibe lista dos alunos com senhas (para administração)
 void ListaAlunos() {
     if (qtdAlunos == 0) {
         printf("\nNenhum aluno cadastrado.\n");
@@ -227,6 +244,7 @@ void ListaAlunos() {
     }
 }
 
+// Atualiza nome e senha de um aluno existente, buscado pelo RGM
 void AtualizarAluno() {
     if (qtdAlunos == 0) {
         printf("\nNenhum aluno cadastrado para atualizar.\n");
@@ -240,8 +258,9 @@ void AtualizarAluno() {
 
     for (int i = 0; i < qtdAlunos; i++) {
         if (strcmp(alunos[i].RGM, rgmBusca) == 0) {
-            printf("Aluno encontrado: %s\n", alunos[i].nome);
+            printf("Atualizando aluno: %s\n", alunos[i].nome);
 
+            // Atualiza nome com validação
             do {
                 printf("Digite o novo nome: ");
                 fgets(alunos[i].nome, sizeof(alunos[i].nome), stdin);
@@ -253,8 +272,9 @@ void AtualizarAluno() {
                 }
             } while (1);
 
+            // Atualiza senha com validação
             do {
-                printf("Digite a nova senha: ");
+                printf("Digite a nova senha (apenas números): ");
                 fgets(alunos[i].senha, sizeof(alunos[i].senha), stdin);
                 alunos[i].senha[strcspn(alunos[i].senha, "\n")] = '\0';
                 if (!validaNumeros(alunos[i].senha)) {
@@ -268,35 +288,45 @@ void AtualizarAluno() {
             return;
         }
     }
-
     printf("Aluno com RGM %s não encontrado.\n", rgmBusca);
 }
 
+// Função para deletar um aluno pelo RGM
 void DeletarAluno() {
     if (qtdAlunos == 0) {
         printf("\nNenhum aluno cadastrado para deletar.\n");
         return;
     }
 
-    char rgmBusca[20];
+    char rgmDeletar[20];
     printf("Digite o RGM do aluno que deseja deletar: ");
-    fgets(rgmBusca, sizeof(rgmBusca), stdin);
-    rgmBusca[strcspn(rgmBusca, "\n")] = '\0';
+    fgets(rgmDeletar, sizeof(rgmDeletar), stdin);
+    rgmDeletar[strcspn(rgmDeletar, "\n")] = '\0';
 
+    int indice = -1;
+    // Procura o índice do aluno que será deletado
     for (int i = 0; i < qtdAlunos; i++) {
-        if (strcmp(alunos[i].RGM, rgmBusca) == 0) {
-            for (int j = i; j < qtdAlunos - 1; j++) {
-                alunos[j] = alunos[j + 1];
-            }
-            qtdAlunos--;
-            printf("Aluno deletado com sucesso!\n");
-            return;
+        if (strcmp(alunos[i].RGM, rgmDeletar) == 0) {
+            indice = i;
+            break;
         }
     }
 
-    printf("Aluno com RGM %s não encontrado.\n", rgmBusca);
+    if (indice == -1) {
+        printf("Aluno com RGM %s não encontrado.\n", rgmDeletar);
+        return;
+    }
+
+    // Move todos os alunos posteriores uma posição para trás para "apagar" o aluno
+    for (int i = indice; i < qtdAlunos - 1; i++) {
+        alunos[i] = alunos[i + 1];
+    }
+    qtdAlunos--;  // Decrementa o total de alunos
+
+    printf("Aluno com RGM %s deletado com sucesso!\n", rgmDeletar);
 }
 
+// Função principal para menu e controle do programa
 int main() {
     setlocale(LC_ALL, "Portuguese");
 
@@ -304,26 +334,41 @@ int main() {
 
     do {
         printf("\n--- Sistema de Cadastro de Alunos ---\n");
-        printf("1. Cadastrar Aluno\n");
-        printf("2. Login do Aluno\n");
-        printf("3. Relatório de Alunos\n");
-        printf("4. Lista de Alunos (Admin)\n");
-        printf("5. Atualizar Aluno\n");
-        printf("6. Deletar Aluno\n");
-        printf("0. Sair\n");
+        printf("1 - Cadastrar Aluno\n");
+        printf("2 - Login e Lançar Notas\n");
+        printf("3 - Relatório de Alunos\n");
+        printf("4 - Lista de Alunos (Senha)\n");
+        printf("5 - Atualizar Aluno\n");
+        printf("6 - Deletar Aluno\n");
+        printf("0 - Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
-        while (getchar() != '\n');
+        while (getchar() != '\n');  // Limpa buffer
 
         switch (opcao) {
-            case 1: CadastrarAluno(); break;
-            case 2: LoginAluno(); break;
-            case 3: RelatorioAlunos(); break;
-            case 4: ListaAlunos(); break;
-            case 5: AtualizarAluno(); break;
-            case 6: DeletarAluno(); break;
-            case 0: printf("Saindo...\n"); break;
-            default: printf("Opção inválida. Tente novamente.\n");
+            case 1:
+                CadastrarAluno();
+                break;
+            case 2:
+                LoginAluno();
+                break;
+            case 3:
+                RelatorioAlunos();
+                break;
+            case 4:
+                ListaAlunos();
+                break;
+            case 5:
+                AtualizarAluno();
+                break;
+            case 6:
+                DeletarAluno();
+                break;
+            case 0:
+                printf("Saindo do programa...\n");
+                break;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
         }
     } while (opcao != 0);
 
