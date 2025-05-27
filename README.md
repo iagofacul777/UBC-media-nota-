@@ -1,30 +1,60 @@
-# Sistema de Cadastro e Gestão de Alunos
+# 📚 Sistema de Gestão de Alunos em C
 
-## 📋 Descrição
+## 🎯 Descrição
 
-Este é um sistema simples de cadastro e gestão de alunos desenvolvido em linguagem C. O sistema permite cadastrar, autenticar, atualizar, listar e deletar alunos, além de realizar o cálculo da média final com base nas notas das avaliações A1, A2 e, se necessário, AF (Avaliação Final).
+Este projeto consiste em um sistema completo de cadastro e gestão de alunos, desenvolvido na linguagem C. O sistema permite realizar operações de CRUD (Create, Read, Update, Delete), autenticação de usuário, cálculo de médias e emissão de relatórios.
 
-O sistema também gera relatórios com a situação do aluno: **Aprovado** ou **Reprovado**.
+---
 
-## 🎯 Funcionalidades
+## 🛠️ Funcionalidades
 
-- ✅ Cadastro de alunos com validação de nome, RGM e senha.
-- ✅ Login de aluno com autenticação por RGM e senha.
-- ✅ Cálculo automático da média final e situação (Aprovado/Reprovado).
-- ✅ Atualização de dados do aluno.
-- ✅ Deleção de alunos cadastrados.
-- ✅ Listagem de todos os alunos cadastrados.
-- ✅ Relatório completo dos alunos com médias e situações.
+✅ **Cadastro de Alunos:**  
+- Registro de nome, RGM (Registro Geral do Aluno) e senha.  
+- Validação para impedir cadastros duplicados e garantir entrada de dados correta.
 
-## 🛠️ Tecnologias Utilizadas
+✅ **Login de Alunos:**  
+- Autenticação via RGM e senha.  
+- Inserção das notas A1 e A2.  
+- Caso necessário, realização da AF (Avaliação Final) substituindo a menor nota.  
+- Cálculo automático da média e definição da situação: Aprovado ou Reprovado.  
+- Geração de relatório individual com notas e situação.
 
-- Linguagem C
-- Biblioteca padrão: stdio.h, string.h, ctype.h, locale.h
+✅ **Relatório Geral de Alunos:**  
+- Exibe todos os alunos cadastrados, com nome, RGM, média e situação final.
+
+✅ **Listagem Administrativa:**  
+- Mostra nome, RGM e senha de todos os alunos (uso exclusivo para administração).
+
+✅ **Atualização de Cadastro:**  
+- Permite alterar o nome e a senha do aluno a partir do RGM.
+
+✅ **Exclusão de Aluno:**  
+- Remove permanentemente um aluno do sistema através do RGM.
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+- Linguagem: **C**  
+- Bibliotecas padrão:  
+  - `<stdio.h>` — Entrada e saída de dados  
+  - `<string.h>` — Manipulação de strings  
+  - `<ctype.h>` — Validação de caracteres  
+
+---
+
+## 🏗️ Estrutura do Sistema
+
+- Estrutura `struct Aluno` para armazenar dados de cada aluno.  
+- Vetor `alunos[MAX_ALUNOS]` para manter os registros na memória.  
+- Funções separadas para cada operação: cadastro, login, relatório, atualização e exclusão.  
+- Validações para garantir integridade e segurança dos dados.
+
+---
 
 ## 🚀 Como Executar
 
-1. Clone ou baixe o repositório.
-2. Compile o código com um compilador C (por exemplo, GCC):
+1. Clone o repositório:
 
-   ```bash
-   gcc sistema_alunos.c -o sistema_alunos
+```bash
+git clone https://github.com/seu-usuario/sistema-gestao-alunos.git
