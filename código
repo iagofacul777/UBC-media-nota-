@@ -192,7 +192,7 @@ void LoginAluno() {
     }
 
     // Calcula a média final e atualiza os dados do aluno
-    float mediaFinal = (A1 + A2) / 2;
+    float mediaFinal = (A1 + A2)  ;
     alunos[indiceAluno].mediaFinal = mediaFinal;
 
     if (mediaFinal >= 6) {
