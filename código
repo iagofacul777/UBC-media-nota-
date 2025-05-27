@@ -170,7 +170,7 @@ void LoginAluno() {
     } while (1);
 
     // Verifica se é necessária Avaliação Final (AF)
-    if ((A1 + A2) / 2 < 6) {
+    if ((A1 + A2)< 6) {
         printf("Aluno precisa fazer Avaliação Final (AF).\n");
         do {
             printf("Digite a nota da AF (0 a 10): ");
